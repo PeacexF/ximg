@@ -36,3 +36,12 @@ dist-ssr
 *.sln
 *.sw?
 notes/
+# ximg
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+out/
+*.db
+.ximg/
+ximg.toml

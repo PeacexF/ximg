@@ -1,0 +1,60 @@
+[project]
+name = "ximg"
+version = "0.1.0"
+description = "Crawl a website and save every image it exposes."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.14"
+dependencies = [
+    "httpx[http2]>=0.28",
+    "selectolax>=0.4.13",
+    "lxml>=6.0",
+    "protego>=0.7",
+    "pydantic>=2.13",
+    "typer>=0.27",
+    "rich>=15.0",
+]
+
+[project.optional-dependencies]
+render = ["playwright>=1.55"]
+
+[project.scripts]
+ximg = "ximg.cli:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1",
+    "pytest-asyncio>=1.4",
+    "respx>=0.23",
+    "ruff>=0.16",
+    "mypy>=2.3",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+line-length = 120
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF", "ASYNC"]
+ignore = ["RUF001", "RUF002", "RUF003"]
+
+[tool.mypy]
+python_version = "3.14"
+strict = true
+files = ["src/ximg"]
+plugins = ["pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+module = ["lxml.*", "protego.*", "playwright.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+markers = ["render: needs Playwright + Chromium (uv sync --extra render && uv run playwright install chromium)"]
+addopts = "-m 'not render'"

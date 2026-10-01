@@ -1,0 +1,32 @@
+# Example ximg config for an engagement. Copy to ximg.toml (git-ignored) and edit.
+# Top-level keys must come before the first [table].
+seeds   = ["https://www.example.com/"]
+out     = "/data/recon/example.com"
+robots  = "respect"
+upgrade = ["wordpress-size-suffix"]
+
+[engagement]
+id      = "ENG-2026-014"
+notes   = "Scope per SoW §3; cdn.example.com approved by client"
+contact = "you@yourdomain.example"
+
+[scope.pages]
+hosts   = ["www.example.com", "example.com"]
+exclude = ["/logout*", "/cart/*", "/search*", "/wp-admin/*"]
+
+[scope.images]
+hosts = ["cdn.example.com"]
+
+[limits]
+max_pages       = 5000
+max_total_bytes = "5GB"
+
+[filters]
+min_file_bytes = 2048
+srcset         = "largest"
+
+[rate]
+per_host = 1.0
+
+[render]
+mode = "auto"
